@@ -2,10 +2,12 @@
   "name": "conditionallogger",
   "displayName": "ConditionalLogger",
   "description": "Automatically inserts console.log() statements inside conditional blocks like if, else, and switch to make debugging faster and easier.",
+  "publisher": "RahulThummar", 
+  "icon": "./ConditionalLogger.png",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.102.0"
-  },
+  },  
   "categories": [
     "Debugging",
     "Other"
@@ -20,13 +22,17 @@
     "auto log",
     "developer tools"
   ],
-  "activationEvents": ["onCommand:conditionallogger.ConditionalLogger"],
+  "activationEvents": [
+    "onCommand:conditionallogger.ConditionalLogger"
+  ],
   "main": "./extension.js",
   "contributes": {
-    "commands": [{
-      "command": "conditionallogger.ConditionalLogger",
-      "title": "Insert Logs into Conditionals"
-    }],
+    "commands": [
+      {
+        "command": "conditionallogger.ConditionalLogger",
+        "title": "Insert Logs into Conditionals"
+      }
+    ],
     "keybindings": [
       {
         "command": "conditionallogger.ConditionalLogger",
@@ -41,11 +47,15 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.102.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "eslint": "^9.25.1",
+    "@types/vscode": "^1.102.0",
     "@vscode/test-cli": "^0.0.11",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1"
+  },
+  "dependencies": {
+    "@babel/parser": "^7.28.0",
+    "@babel/traverse": "^7.28.0"
   }
 }
