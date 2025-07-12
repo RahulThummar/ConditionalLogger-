@@ -7,15 +7,33 @@
     "vscode": "^1.102.0"
   },
   "categories": [
+    "Debugging",
     "Other"
   ],
-  "activationEvents": [],
+  "keywords": [
+    "console.log",
+    "conditional",
+    "if else",
+    "switch",
+    "debugging",
+    "logger",
+    "auto log",
+    "developer tools"
+  ],
+  "activationEvents": ["onCommand:conditionallogger.ConditionalLogger"],
   "main": "./extension.js",
   "contributes": {
     "commands": [{
-      "command": "conditionallogger.helloWorld",
-      "title": "Hello World"
-    }]
+      "command": "conditionallogger.ConditionalLogger",
+      "title": "Insert Logs into Conditionals"
+    }],
+    "keybindings": [
+      {
+        "command": "conditionallogger.ConditionalLogger",
+        "key": "alt+l",
+        "when": "editorTextFocus"
+      }
+    ]
   },
   "scripts": {
     "lint": "eslint .",
