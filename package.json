@@ -2,16 +2,16 @@
   "name": "conditionallogger",
   "displayName": "ConditionalLogger",
   "description": "Automatically inserts console.log() statements inside conditional blocks like if, else, and switch to make debugging faster and easier.",
-  "publisher": "RahulThummar", 
+  "publisher": "RahulThummar",
   "icon": "./ConditionalLogger.png",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": {
     "type": "git",
     "url": "https://github.com/RahulThummar/ConditionalLogger-"
   },
   "engines": {
-    "vscode": "^1.102.0"
-  },  
+    "vscode": "^1.70.0"
+  },
   "categories": [
     "Programming Languages",
     "Other"
@@ -53,7 +53,7 @@
   "devDependencies": {
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
-    "@types/vscode": "^1.102.0",
+    "@types/vscode": "^1.70.0",
     "@vscode/test-cli": "^0.0.11",
     "@vscode/test-electron": "^2.5.2",
     "eslint": "^9.25.1"
