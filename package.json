@@ -4,7 +4,7 @@
   "description": "Automatically inserts console.log() statements inside conditional blocks like if, else, and switch to make debugging faster and easier.",
   "publisher": "RahulThummar",
   "icon": "./ConditionalLogger.png",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "repository": {
     "type": "git",
     "url": "https://github.com/RahulThummar/ConditionalLogger-"
@@ -40,7 +40,7 @@
     "keybindings": [
       {
         "command": "conditionallogger.ConditionalLogger",
-        "key": "alt+l",
+        "key": "alt+shift+d",
         "when": "editorTextFocus"
       }
     ]

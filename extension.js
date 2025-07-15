@@ -6,7 +6,7 @@ const traverse = require("@babel/traverse").default;
  * @param {vscode.ExtensionContext} context
  */
 function activate(context) {
-  console.log('ConditionalLogger is now active!');
+  console.log("ConditionalLogger is now active!");
 
   const disposable = vscode.commands.registerCommand(
     "conditionallogger.ConditionalLogger",
@@ -19,12 +19,6 @@ function activate(context) {
 
       const document = editor.document;
       const selection = editor.selection;
-
-    //   if (selection.isEmpty) {
-    //     vscode.window.showWarningMessage("Please select code with conditionals (if, else, switch).");
-    //     return;
-    //   }
-
       const selectedText = document.getText(selection);
       const startLine = selection.start.line;
 
@@ -32,7 +26,14 @@ function activate(context) {
       try {
         ast = parser.parse(selectedText, {
           sourceType: "module",
-          plugins: ["jsx"]
+          plugins: [
+            "jsx", // for React/Vue templates
+            "typescript", // for TypeScript support
+            "classProperties", // for class field declarations
+            "decorators-legacy", // for decorators used in Vue/TS
+            "optionalChaining", // for ?. usage
+            "nullishCoalescingOperator", // for ?? usage
+          ],
         });
       } catch (err) {
         vscode.window.showErrorMessage("Failed to parse selected code.");
@@ -48,14 +49,18 @@ function activate(context) {
 
           // Insert log for `if` block
           if (node.consequent && node.consequent.loc) {
-            const insertLine = startLine + node.consequent.loc.start.line + 1;
+            const insertLine = startLine + node.consequent.loc.start.line;
             const logText = `console.log("Entered if block at line ${insertLine}");\n`;
             edits.push({ line: insertLine, text: logText });
           }
 
-          // Insert log for `else` block (if it exists)
-          if (node.alternate && node.alternate.loc) {
-            const insertLine = startLine + node.alternate.loc.start.line + 1;
+          // ✅ Insert log only if it's a true `else`, not `else if`
+          if (
+            node.alternate &&
+            node.alternate.loc &&
+            node.alternate.type !== "IfStatement"
+          ) {
+            const insertLine = startLine + node.alternate.loc.start.line;
             const logText = `console.log("Entered else block at line ${insertLine}");\n`;
             edits.push({ line: insertLine, text: logText });
           }
@@ -63,22 +68,24 @@ function activate(context) {
 
         SwitchStatement(path) {
           const node = path.node;
-          const insertLine = startLine + node.loc.start.line + 1;
+          const insertLine = startLine + node.loc.start.line;
           const logText = `console.log("Entered switch block at line ${insertLine}");\n`;
           edits.push({ line: insertLine, text: logText });
         },
 
         SwitchCase(path) {
           const node = path.node;
-          const insertLine = startLine + node.loc.start.line + 1;
+          const insertLine = startLine + node.loc.start.line;
           const caseLabel = node.test ? `case ${node.test.value}` : "default";
           const logText = `console.log("Entered ${caseLabel} block at line ${insertLine}");\n`;
           edits.push({ line: insertLine, text: logText });
-        }
+        },
       });
 
       if (edits.length === 0) {
-        vscode.window.showInformationMessage("No conditional blocks found in selected code.");
+        vscode.window.showInformationMessage(
+          "No conditional blocks found in selected code."
+        );
         return;
       }
 
@@ -90,7 +97,9 @@ function activate(context) {
         }
       });
 
-    //   vscode.window.showInformationMessage("Logs inserted into conditional blocks!");
+      vscode.window.showInformationMessage(
+        "Logs inserted into conditional blocks!"
+      );
     }
   );
 
@@ -101,5 +110,5 @@ function deactivate() {}
 
 module.exports = {
   activate,
-  deactivate
+  deactivate,
 };
