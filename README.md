@@ -25,7 +25,9 @@
 
 ### 🔧 Example
 
-Before:
+**Before:**
+
+```js
 
 if (user.age > 18) {
   grantAccess();
@@ -33,7 +35,7 @@ if (user.age > 18) {
   denyAccess();
 }
 
-After pressing Alt+L:
+After pressing Alt+Shift+D:
 
 if (user.age > 18) {
   console.log("Entered if block at line 1");
